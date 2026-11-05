@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>巅峰联赛 S13 · 赛程与指挥名单</title>
+<style>
+  :root{
+    --bg:#0f1216; --card:#1a1f27; --card2:#141920; --line:#2a323d;
+    --txt:#e8edf3; --dim:#93a0b1;
+    --shenwei:#ff9a94; --jingrui:#9ecbff; --yongwu:#ffe08a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+       font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",system-ui,sans-serif;line-height:1.5}
+  .wrap{max-width:1400px;margin:0 auto;padding:28px 20px 60px}
+  h1{margin:0 0 6px;font-size:26px;letter-spacing:.5px}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+  .filters button{background:var(--card);color:var(--dim);border:1px solid var(--line);border-radius:999px;
+                  padding:7px 16px;font-size:14px;cursor:pointer;transition:.15s}
+  .filters button:hover{color:var(--txt);border-color:#41506a}
+  .filters button.on{background:#2b3f5e;color:#fff;border-color:#4f9dff}
+  .week{margin-bottom:34px}
+  .weeks.bygroup{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 22px;align-items:start}
+  .weeks.bygroup .week{margin-bottom:22px}
+  .weeks.bygroup .days{grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+  .week h2{font-size:17px;margin:0 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line);
+           display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .wrange{color:var(--dim);font-size:14px;font-weight:400}
+  .wcount{color:var(--dim);font-size:12px;font-weight:400;margin-left:auto}
+  .days{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+  .day{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+       border-left:4px solid var(--dim)}
+  .day[data-group="神威"]{border-left-color:var(--shenwei)}
+  .day[data-group="精锐"]{border-left-color:var(--jingrui)}
+  .day[data-group="勇武"]{border-left-color:var(--yongwu)}
+  .dh{display:flex;justify-content:space-between;align-items:center;gap:10px;
+      padding:12px 14px;background:var(--card2);border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .wd{font-size:16px;font-weight:700;margin-right:8px}
+  .md{color:var(--dim);font-size:13px}
+  .dh-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .badge{font-size:12px;padding:3px 10px;border-radius:999px;white-space:nowrap;
+         background:rgba(147,160,177,.15);color:var(--dim)}
+  .badge.g-神威{background:rgba(255,154,148,.16);color:var(--shenwei)}
+  .badge.g-精锐{background:rgba(158,203,255,.16);color:var(--jingrui)}
+  .badge.g-勇武{background:rgba(255,224,138,.16);color:var(--yongwu)}
+  .day[data-group="神威"] .wd{color:var(--shenwei)}
+  .day[data-group="精锐"] .wd{color:var(--jingrui)}
+  .day[data-group="勇武"] .wd{color:var(--yongwu)}
+  .slots{padding:6px 8px 10px}
+  .slot{display:flex;gap:12px;padding:8px 6px;border-bottom:1px dashed rgba(255,255,255,.06)}
+  .slot:last-child{border-bottom:none}
+  .time{flex:0 0 92px;font-size:12px;color:var(--dim);padding-top:9px;font-variant-numeric:tabular-nums}
+  .time.tongkai{color:var(--txt);font-weight:700}
+  .matches{flex:1;display:flex;flex-direction:column;gap:6px}
+  .match{display:grid;grid-template-columns:1fr 34px 1fr;align-items:center;
+         background:rgba(255,255,255,.04);border-radius:8px;padding:7px 10px;font-size:14px}
+  .match .t:last-child{text-align:right}
+  .vs{color:var(--dim);font-size:11px;text-align:center;letter-spacing:.5px}
+  @media (max-width:900px){
+    .weeks.bygroup{grid-template-columns:1fr}
+  }
+  @media (max-width:560px){
+    .days{grid-template-columns:1fr}
+    .time{flex-basis:76px;font-size:11px}
+  }
+
+/* ---- roster ---- */
+
+  :root{
+    --bg:#0f1216; --card:#1a1f27; --card2:#141920; --line:#2a323d;
+    --txt:#e8edf3; --dim:#93a0b1;
+    --shenwei:#ff9a94; --jingrui:#9ecbff; --yongwu:#ffe08a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+       font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",system-ui,sans-serif;line-height:1.5}
+  .wrap{max-width:1400px;margin:0 auto;padding:28px 20px 60px}
+  h1{margin:0 0 18px;font-size:26px;letter-spacing:.5px}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+  .filters button{background:var(--card);color:var(--dim);border:1px solid var(--line);border-radius:999px;
+                  padding:7px 16px;font-size:14px;cursor:pointer;transition:.15s}
+  .filters button:hover{color:var(--txt);border-color:#41506a}
+  .filters button.on{background:#2b3f5e;color:#fff;border-color:#4f9dff}
+  .group{margin-bottom:34px}
+  .group h2{font-size:17px;margin:0 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line);
+            display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .group h2::before{content:"";width:4px;height:16px;border-radius:2px;background:var(--dim)}
+  .group[data-group="神威"] h2::before{background:var(--shenwei)}
+  .group[data-group="精锐"] h2::before{background:var(--jingrui)}
+  .group[data-group="勇武"] h2::before{background:var(--yongwu)}
+  .gcount{color:var(--dim);font-size:12px;font-weight:400;margin-left:auto}
+  .teams{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+  .team{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+        border-left:4px solid var(--dim)}
+  .team[data-group="神威"]{border-left-color:var(--shenwei)}
+  .team[data-group="精锐"]{border-left-color:var(--jingrui)}
+  .team[data-group="勇武"]{border-left-color:var(--yongwu)}
+  .th{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+      padding:11px 14px;background:var(--card2);border-bottom:1px solid var(--line)}
+  .tname{font-size:16px;font-weight:700}
+  .team[data-group="神威"] .tname{color:var(--shenwei)}
+  .team[data-group="精锐"] .tname{color:var(--jingrui)}
+  .team[data-group="勇武"] .tname{color:var(--yongwu)}
+  .tmgr{display:flex;align-items:baseline;gap:6px;font-size:14px}
+  .roles{padding:8px 10px 10px;display:flex;flex-direction:column;gap:6px}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .role{display:grid;grid-template-columns:74px 1fr;align-items:center;gap:10px;
+        background:rgba(255,255,255,.04);border-radius:8px;padding:7px 10px;font-size:14px}
+  .pair .role{grid-template-columns:60px 1fr;gap:8px}
+  .role.main{background:rgba(255,255,255,.09)}
+  .role.main .vl{font-weight:700}
+  .lb{font-size:12px;color:var(--dim)}
+  .vl{word-break:break-all}
+  .picks .vl{color:#dbe3ec}
+  @media (max-width:560px){
+    .teams{grid-template-columns:1fr}
+    .pair{grid-template-columns:1fr}
+    .role{grid-template-columns:66px 1fr;font-size:13px}
+  }
+
+/* ---- tabs ---- */
+  .site-head{margin-bottom:20px}
+  .site-head h1{margin:0 0 14px}
+  .tabs{display:flex;gap:8px;border-bottom:1px solid var(--line);margin-bottom:20px}
+  .tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--dim);
+       font-size:15px;padding:8px 4px 10px;margin-right:18px;cursor:pointer;
+       font-family:inherit;transition:.15s}
+  .tab:hover{color:var(--txt)}
+  .tab.on{color:#fff;border-bottom-color:#4f9dff;font-weight:700}
+  .panel{display:none}
+  .panel.on{display:block}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-head">
+    <h1>巅峰联赛 S13</h1>
+    <nav class="tabs">
+      <button class="tab on" data-tab="schedule">赛程</button>
+      <button class="tab" data-tab="roster">指挥名单</button>
+    </nav>
+  </header>
+
+  <section class="panel on" id="panel-schedule">
+  <div class="filters">
+    <button class="on" data-g="all">全部</button>
+    <button data-g="神威">神威</button>
+    <button data-g="精锐">精锐</button>
+    <button data-g="勇武">勇武</button>
+  </div>
+  <div class="weeks">
+<section class="week">
+  <h2>第 1 周 <span class="wrange">9月28日 – 10月3日</span><span class="wcount">36 场</span></h2>
+  <div class="days">
+<article class="day" data-group="神威">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周一</span><span class="md">9月28日</span></div>
+    <div class="dh-right"><span class="badge g-神威">神威组第一轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">时空之隙</span><span class="vs">VS</span><span class="t">紫禁之巅</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">双生梦</span><span class="vs">VS</span><span class="t">2018</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">山清水秀</span><span class="vs">VS</span><span class="t">桂花醉</span></div>
+        <div class="match"><span class="t">天下无双</span><span class="vs">VS</span><span class="t">永结同心</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">紫气东来</span><span class="vs">VS</span><span class="t">东海湾</span></div>
+        <div class="match"><span class="t">彩云追月</span><span class="vs">VS</span><span class="t">似水流年</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="神威">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周二</span><span class="md">9月29日</span></div>
+    <div class="dh-right"><span class="badge g-神威">神威组第二轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">时空之隙</span><span class="vs">VS</span><span class="t">双生梦</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2018</span><span class="vs">VS</span><span class="t">紫禁之巅</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">彩云追月</span><span class="vs">VS</span><span class="t">桂花醉</span></div>
+        <div class="match"><span class="t">天下无双</span><span class="vs">VS</span><span class="t">紫气东来</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">山清水秀</span><span class="vs">VS</span><span class="t">似水流年</span></div>
+        <div class="match"><span class="t">东海湾</span><span class="vs">VS</span><span class="t">永结同心</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="精锐">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周三</span><span class="md">9月30日</span></div>
+    <div class="dh-right"><span class="badge g-精锐">精锐组第一轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">再续前缘</span><span class="vs">VS</span><span class="t">2020</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">时空之隙</span><span class="vs">VS</span><span class="t">大美神州</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2023</span><span class="vs">VS</span><span class="t">一吻天荒</span></div>
+        <div class="match"><span class="t">2022</span><span class="vs">VS</span><span class="t">生日快乐</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">情有独钟</span><span class="vs">VS</span><span class="t">四海欢腾</span></div>
+        <div class="match"><span class="t">三界乐园</span><span class="vs">VS</span><span class="t">纵横天下</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="精锐">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周四</span><span class="md">10月1日</span></div>
+    <div class="dh-right"><span class="badge g-精锐">精锐组第二轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2020</span><span class="vs">VS</span><span class="t">时空之隙</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">再续前缘</span><span class="vs">VS</span><span class="t">大美神州</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2023</span><span class="vs">VS</span><span class="t">四海欢腾</span></div>
+        <div class="match"><span class="t">2022</span><span class="vs">VS</span><span class="t">纵横天下</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">生日快乐</span><span class="vs">VS</span><span class="t">三界乐园</span></div>
+        <div class="match"><span class="t">情有独钟</span><span class="vs">VS</span><span class="t">一吻天荒</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="勇武">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周五</span><span class="md">10月2日</span></div>
+    <div class="dh-right"><span class="badge g-勇武">勇武组第一轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">天下无双</span><span class="vs">VS</span><span class="t">双面伊人</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">瑶池圣地</span><span class="vs">VS</span><span class="t">倾国倾城</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">情有独钟</span><span class="vs">VS</span><span class="t">虎虎生威</span></div>
+        <div class="match"><span class="t">盛世丰年</span><span class="vs">VS</span><span class="t">一见钟情</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2019</span><span class="vs">VS</span><span class="t">#18</span></div>
+        <div class="match"><span class="t">贝壳女孩</span><span class="vs">VS</span><span class="t">盛世长歌</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="勇武">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周六</span><span class="md">10月3日</span></div>
+    <div class="dh-right"><span class="badge g-勇武">勇武组第二轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">天下无双</span><span class="vs">VS</span><span class="t">倾国倾城</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">瑶池圣地</span><span class="vs">VS</span><span class="t">双面伊人</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">情有独钟</span><span class="vs">VS</span><span class="t">盛世长歌</span></div>
+        <div class="match"><span class="t">2019</span><span class="vs">VS</span><span class="t">一见钟情</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">盛世丰年</span><span class="vs">VS</span><span class="t">#18</span></div>
+        <div class="match"><span class="t">虎虎生威</span><span class="vs">VS</span><span class="t">贝壳女孩</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+  </div>
+</section>
+<section class="week">
+  <h2>第 2 周 <span class="wrange">10月5日 – 10月10日</span><span class="wcount">36 场</span></h2>
+  <div class="days">
+<article class="day" data-group="神威">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周一</span><span class="md">10月5日</span></div>
+    <div class="dh-right"><span class="badge g-神威">神威组第三轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">天下无双</span><span class="vs">VS</span><span class="t">紫禁之巅</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">山清水秀</span><span class="vs">VS</span><span class="t">双生梦</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">时空之隙</span><span class="vs">VS</span><span class="t">似水流年</span></div>
+        <div class="match"><span class="t">彩云追月</span><span class="vs">VS</span><span class="t">永结同心</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2018</span><span class="vs">VS</span><span class="t">紫气东来</span></div>
+        <div class="match"><span class="t">桂花醉</span><span class="vs">VS</span><span class="t">东海湾</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="神威">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周二</span><span class="md">10月6日</span></div>
+    <div class="dh-right"><span class="badge g-神威">神威组第四轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">山清水秀</span><span class="vs">VS</span><span class="t">紫气东来</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">东海湾</span><span class="vs">VS</span><span class="t">紫禁之巅</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">时空之隙</span><span class="vs">VS</span><span class="t">桂花醉</span></div>
+        <div class="match"><span class="t">彩云追月</span><span class="vs">VS</span><span class="t">双生梦</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2018</span><span class="vs">VS</span><span class="t">永结同心</span></div>
+        <div class="match"><span class="t">天下无双</span><span class="vs">VS</span><span class="t">似水流年</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="精锐">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周三</span><span class="md">10月7日</span></div>
+    <div class="dh-right"><span class="badge g-精锐">精锐组第三轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2022</span><span class="vs">VS</span><span class="t">大美神州</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">时空之隙</span><span class="vs">VS</span><span class="t">生日快乐</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">再续前缘</span><span class="vs">VS</span><span class="t">一吻天荒</span></div>
+        <div class="match"><span class="t">情有独钟</span><span class="vs">VS</span><span class="t">纵横天下</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2023</span><span class="vs">VS</span><span class="t">2020</span></div>
+        <div class="match"><span class="t">四海欢腾</span><span class="vs">VS</span><span class="t">三界乐园</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="精锐">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周四</span><span class="md">10月8日</span></div>
+    <div class="dh-right"><span class="badge g-精锐">精锐组第四轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2022</span><span class="vs">VS</span><span class="t">一吻天荒</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">三界乐园</span><span class="vs">VS</span><span class="t">大美神州</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">再续前缘</span><span class="vs">VS</span><span class="t">四海欢腾</span></div>
+        <div class="match"><span class="t">2023</span><span class="vs">VS</span><span class="t">生日快乐</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">时空之隙</span><span class="vs">VS</span><span class="t">纵横天下</span></div>
+        <div class="match"><span class="t">情有独钟</span><span class="vs">VS</span><span class="t">2020</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="勇武">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周五</span><span class="md">10月9日</span></div>
+    <div class="dh-right"><span class="badge g-勇武">勇武组第三轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2019</span><span class="vs">VS</span><span class="t">双面伊人</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">情有独钟</span><span class="vs">VS</span><span class="t">天下无双</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">瑶池圣地</span><span class="vs">VS</span><span class="t">贝壳女孩</span></div>
+        <div class="match"><span class="t">虎虎生威</span><span class="vs">VS</span><span class="t">一见钟情</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">倾国倾城</span><span class="vs">VS</span><span class="t">盛世丰年</span></div>
+        <div class="match"><span class="t">盛世长歌</span><span class="vs">VS</span><span class="t">#18</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="勇武">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周六</span><span class="md">10月10日</span></div>
+    <div class="dh-right"><span class="badge g-勇武">勇武组第四轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">虎虎生威</span><span class="vs">VS</span><span class="t">天下无双</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">#18</span><span class="vs">VS</span><span class="t">双面伊人</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">瑶池圣地</span><span class="vs">VS</span><span class="t">盛世长歌</span></div>
+        <div class="match"><span class="t">情有独钟</span><span class="vs">VS</span><span class="t">盛世丰年</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">倾国倾城</span><span class="vs">VS</span><span class="t">一见钟情</span></div>
+        <div class="match"><span class="t">2019</span><span class="vs">VS</span><span class="t">贝壳女孩</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+  </div>
+</section>
+<section class="week">
+  <h2>第 3 周 <span class="wrange">10月12日 – 10月17日</span><span class="wcount">36 场</span></h2>
+  <div class="days">
+<article class="day" data-group="神威">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周一</span><span class="md">10月12日</span></div>
+    <div class="dh-right"><span class="badge g-神威">神威组第五轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">时空之隙</span><span class="vs">VS</span><span class="t">东海湾</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">彩云追月</span><span class="vs">VS</span><span class="t">天下无双</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2018</span><span class="vs">VS</span><span class="t">山清水秀</span></div>
+        <div class="match"><span class="t">双生梦</span><span class="vs">VS</span><span class="t">永结同心</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">紫禁之巅</span><span class="vs">VS</span><span class="t">似水流年</span></div>
+        <div class="match"><span class="t">桂花醉</span><span class="vs">VS</span><span class="t">紫气东来</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="神威">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周二</span><span class="md">10月13日</span></div>
+    <div class="dh-right"><span class="badge g-神威">神威组第六轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2018</span><span class="vs">VS</span><span class="t">似水流年</span></div>
+        <div class="match"><span class="t">时空之隙</span><span class="vs">VS</span><span class="t">永结同心</span></div>
+        <div class="match"><span class="t">天下无双</span><span class="vs">VS</span><span class="t">桂花醉</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">东海湾</span><span class="vs">VS</span><span class="t">双生梦</span></div>
+        <div class="match"><span class="t">彩云追月</span><span class="vs">VS</span><span class="t">紫气东来</span></div>
+        <div class="match"><span class="t">山清水秀</span><span class="vs">VS</span><span class="t">紫禁之巅</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="精锐">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周三</span><span class="md">10月14日</span></div>
+    <div class="dh-right"><span class="badge g-精锐">精锐组第五轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">再续前缘</span><span class="vs">VS</span><span class="t">三界乐园</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2020</span><span class="vs">VS</span><span class="t">纵横天下</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">大美神州</span><span class="vs">VS</span><span class="t">一吻天荒</span></div>
+        <div class="match"><span class="t">四海欢腾</span><span class="vs">VS</span><span class="t">生日快乐</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">时空之隙</span><span class="vs">VS</span><span class="t">2023</span></div>
+        <div class="match"><span class="t">情有独钟</span><span class="vs">VS</span><span class="t">2022</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="精锐">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周四</span><span class="md">10月15日</span></div>
+    <div class="dh-right"><span class="badge g-精锐">精锐组第六轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2023</span><span class="vs">VS</span><span class="t">大美神州</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">再续前缘</span><span class="vs">VS</span><span class="t">纵横天下</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2022</span><span class="vs">VS</span><span class="t">四海欢腾</span></div>
+        <div class="match"><span class="t">时空之隙</span><span class="vs">VS</span><span class="t">一吻天荒</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">三界乐园</span><span class="vs">VS</span><span class="t">2020</span></div>
+        <div class="match"><span class="t">情有独钟</span><span class="vs">VS</span><span class="t">生日快乐</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="勇武">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周五</span><span class="md">10月16日</span></div>
+    <div class="dh-right"><span class="badge g-勇武">勇武组第五轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">瑶池圣地</span><span class="vs">VS</span><span class="t">#18</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">天下无双</span><span class="vs">VS</span><span class="t">一见钟情</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">双面伊人</span><span class="vs">VS</span><span class="t">贝壳女孩</span></div>
+        <div class="match"><span class="t">虎虎生威</span><span class="vs">VS</span><span class="t">2019</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">倾国倾城</span><span class="vs">VS</span><span class="t">情有独钟</span></div>
+        <div class="match"><span class="t">盛世长歌</span><span class="vs">VS</span><span class="t">盛世丰年</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="勇武">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周六</span><span class="md">10月17日</span></div>
+    <div class="dh-right"><span class="badge g-勇武">勇武组第六轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">虎虎生威</span><span class="vs">VS</span><span class="t">盛世丰年</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">瑶池圣地</span><span class="vs">VS</span><span class="t">一见钟情</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2019</span><span class="vs">VS</span><span class="t">盛世长歌</span></div>
+        <div class="match"><span class="t">倾国倾城</span><span class="vs">VS</span><span class="t">贝壳女孩</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">#18</span><span class="vs">VS</span><span class="t">天下无双</span></div>
+        <div class="match"><span class="t">情有独钟</span><span class="vs">VS</span><span class="t">双面伊人</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+  </div>
+</section>
+<section class="week">
+  <h2>第 4 周 <span class="wrange">10月19日 – 10月24日</span><span class="wcount">18 场</span></h2>
+  <div class="days">
+<article class="day" data-group="神威">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周一</span><span class="md">10月19日</span></div>
+    <div class="dh-right"><span class="badge g-神威">神威组第七轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">双生梦</span><span class="vs">VS</span><span class="t">紫气东来</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">紫禁之巅</span><span class="vs">VS</span><span class="t">桂花醉</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="神威">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周二</span><span class="md">10月20日</span></div>
+    <div class="dh-right"><span class="badge g-神威">神威组第七轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">时空之隙</span><span class="vs">VS</span><span class="t">天下无双</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">山清水秀</span><span class="vs">VS</span><span class="t">东海湾</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">似水流年</span><span class="vs">VS</span><span class="t">永结同心</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2018</span><span class="vs">VS</span><span class="t">彩云追月</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="精锐">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周三</span><span class="md">10月21日</span></div>
+    <div class="dh-right"><span class="badge g-精锐">精锐组第七轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2020</span><span class="vs">VS</span><span class="t">生日快乐</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">时空之隙</span><span class="vs">VS</span><span class="t">情有独钟</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="精锐">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周四</span><span class="md">10月22日</span></div>
+    <div class="dh-right"><span class="badge g-精锐">精锐组第七轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">再续前缘</span><span class="vs">VS</span><span class="t">2022</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">大美神州</span><span class="vs">VS</span><span class="t">四海欢腾</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2023</span><span class="vs">VS</span><span class="t">三界乐园</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">一吻天荒</span><span class="vs">VS</span><span class="t">纵横天下</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="勇武">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周五</span><span class="md">10月23日</span></div>
+    <div class="dh-right"><span class="badge g-勇武">勇武组第七轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">天下无双</span><span class="vs">VS</span><span class="t">盛世丰年</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">倾国倾城</span><span class="vs">VS</span><span class="t">虎虎生威</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="勇武">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周六</span><span class="md">10月24日</span></div>
+    <div class="dh-right"><span class="badge g-勇武">勇武组第七轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">瑶池圣地</span><span class="vs">VS</span><span class="t">2019</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">双面伊人</span><span class="vs">VS</span><span class="t">盛世长歌</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">情有独钟</span><span class="vs">VS</span><span class="t">#18</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">贝壳女孩</span><span class="vs">VS</span><span class="t">一见钟情</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+  </div>
+</section>
+<section class="week">
+  <h2>第 5 周 <span class="wrange">10月26日 – 10月31日</span><span class="wcount">18 场</span></h2>
+  <div class="days">
+<article class="day" data-group="神威">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周一</span><span class="md">10月26日</span></div>
+    <div class="dh-right"><span class="badge g-神威">神威组第八轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">似水流年</span><span class="vs">VS</span><span class="t">东海湾</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2018</span><span class="vs">VS</span><span class="t">桂花醉</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="神威">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周二</span><span class="md">10月27日</span></div>
+    <div class="dh-right"><span class="badge g-神威">神威组第八轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">双生梦</span><span class="vs">VS</span><span class="t">天下无双</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">山清水秀</span><span class="vs">VS</span><span class="t">永结同心</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">时空之隙</span><span class="vs">VS</span><span class="t">紫气东来</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">彩云追月</span><span class="vs">VS</span><span class="t">紫禁之巅</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="精锐">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周三</span><span class="md">10月28日</span></div>
+    <div class="dh-right"><span class="badge g-精锐">精锐组第八轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">一吻天荒</span><span class="vs">VS</span><span class="t">三界乐园</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">时空之隙</span><span class="vs">VS</span><span class="t">四海欢腾</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="精锐">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周四</span><span class="md">10月29日</span></div>
+    <div class="dh-right"><span class="badge g-精锐">精锐组第八轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2020</span><span class="vs">VS</span><span class="t">2022</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">再续前缘</span><span class="vs">VS</span><span class="t">生日快乐</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2023</span><span class="vs">VS</span><span class="t">纵横天下</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">情有独钟</span><span class="vs">VS</span><span class="t">大美神州</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="勇武">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周五</span><span class="md">10月30日</span></div>
+    <div class="dh-right"><span class="badge g-勇武">勇武组第八轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">情有独钟</span><span class="vs">VS</span><span class="t">一见钟情</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">虎虎生威</span><span class="vs">VS</span><span class="t">双面伊人</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="勇武">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周六</span><span class="md">10月31日</span></div>
+    <div class="dh-right"><span class="badge g-勇武">勇武组第八轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">贝壳女孩</span><span class="vs">VS</span><span class="t">#18</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">倾国倾城</span><span class="vs">VS</span><span class="t">盛世长歌</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">瑶池圣地</span><span class="vs">VS</span><span class="t">盛世丰年</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">天下无双</span><span class="vs">VS</span><span class="t">2019</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+  </div>
+</section>
+<section class="week">
+  <h2>第 6 周 <span class="wrange">11月2日 – 11月7日</span><span class="wcount">18 场</span></h2>
+  <div class="days">
+<article class="day" data-group="神威">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周一</span><span class="md">11月2日</span></div>
+    <div class="dh-right"><span class="badge g-神威">神威组第九轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">时空之隙</span><span class="vs">VS</span><span class="t">彩云追月</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2018</span><span class="vs">VS</span><span class="t">东海湾</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="神威">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周二</span><span class="md">11月3日</span></div>
+    <div class="dh-right"><span class="badge g-神威">神威组第九轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">山清水秀</span><span class="vs">VS</span><span class="t">天下无双</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">似水流年</span><span class="vs">VS</span><span class="t">紫气东来</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">双生梦</span><span class="vs">VS</span><span class="t">桂花醉</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">紫禁之巅</span><span class="vs">VS</span><span class="t">永结同心</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="精锐">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周三</span><span class="md">11月4日</span></div>
+    <div class="dh-right"><span class="badge g-精锐">精锐组第九轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">再续前缘</span><span class="vs">VS</span><span class="t">情有独钟</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">时空之隙</span><span class="vs">VS</span><span class="t">三界乐园</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="精锐">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周四</span><span class="md">11月5日</span></div>
+    <div class="dh-right"><span class="badge g-精锐">精锐组第九轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2023</span><span class="vs">VS</span><span class="t">2022</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">一吻天荒</span><span class="vs">VS</span><span class="t">生日快乐</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">2020</span><span class="vs">VS</span><span class="t">四海欢腾</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">大美神州</span><span class="vs">VS</span><span class="t">纵横天下</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="勇武">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周五</span><span class="md">11月6日</span></div>
+    <div class="dh-right"><span class="badge g-勇武">勇武组第九轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">瑶池圣地</span><span class="vs">VS</span><span class="t">虎虎生威</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">倾国倾城</span><span class="vs">VS</span><span class="t">#18</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="勇武">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周六</span><span class="md">11月7日</span></div>
+    <div class="dh-right"><span class="badge g-勇武">勇武组第九轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">情有独钟</span><span class="vs">VS</span><span class="t">2019</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">贝壳女孩</span><span class="vs">VS</span><span class="t">盛世丰年</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">18:00-20:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">天下无双</span><span class="vs">VS</span><span class="t">盛世长歌</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">20:00-22:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">双面伊人</span><span class="vs">VS</span><span class="t">一见钟情</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+  </div>
+</section>
+<section class="week">
+  <h2>第 7 周 <span class="wrange">11月9日 – 11月15日</span><span class="wcount">36 场</span></h2>
+  <div class="days">
+<article class="day" data-group="神威">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周一</span><span class="md">11月9日</span></div>
+    <div class="dh-right"><span class="badge g-神威">神威组第十轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">桂花醉</span><span class="vs">VS</span><span class="t">永结同心</span></div>
+        <div class="match"><span class="t">紫禁之巅</span><span class="vs">VS</span><span class="t">紫气东来</span></div>
+        <div class="match"><span class="t">双生梦</span><span class="vs">VS</span><span class="t">似水流年</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">时空之隙</span><span class="vs">VS</span><span class="t">山清水秀</span></div>
+        <div class="match"><span class="t">彩云追月</span><span class="vs">VS</span><span class="t">东海湾</span></div>
+        <div class="match"><span class="t">2018</span><span class="vs">VS</span><span class="t">天下无双</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="神威">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周二</span><span class="md">11月10日</span></div>
+    <div class="dh-right"><span class="badge g-神威">神威组第十一轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time tongkai">14:00 同开</div>
+      <div class="matches">
+        <div class="match"><span class="t">紫气东来</span><span class="vs">VS</span><span class="t">永结同心</span></div>
+        <div class="match"><span class="t">天下无双</span><span class="vs">VS</span><span class="t">东海湾</span></div>
+        <div class="match"><span class="t">山清水秀</span><span class="vs">VS</span><span class="t">彩云追月</span></div>
+        <div class="match"><span class="t">似水流年</span><span class="vs">VS</span><span class="t">桂花醉</span></div>
+        <div class="match"><span class="t">时空之隙</span><span class="vs">VS</span><span class="t">2018</span></div>
+        <div class="match"><span class="t">双生梦</span><span class="vs">VS</span><span class="t">紫禁之巅</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="精锐">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周三</span><span class="md">11月11日</span></div>
+    <div class="dh-right"><span class="badge g-精锐">精锐组第十轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">四海欢腾</span><span class="vs">VS</span><span class="t">纵横天下</span></div>
+        <div class="match"><span class="t">大美神州</span><span class="vs">VS</span><span class="t">生日快乐</span></div>
+        <div class="match"><span class="t">时空之隙</span><span class="vs">VS</span><span class="t">2022</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">再续前缘</span><span class="vs">VS</span><span class="t">2023</span></div>
+        <div class="match"><span class="t">情有独钟</span><span class="vs">VS</span><span class="t">三界乐园</span></div>
+        <div class="match"><span class="t">2020</span><span class="vs">VS</span><span class="t">一吻天荒</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="精锐">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周四</span><span class="md">11月12日</span></div>
+    <div class="dh-right"><span class="badge g-精锐">精锐组第十一轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time tongkai">18:00 同开</div>
+      <div class="matches">
+        <div class="match"><span class="t">生日快乐</span><span class="vs">VS</span><span class="t">纵横天下</span></div>
+        <div class="match"><span class="t">2022</span><span class="vs">VS</span><span class="t">三界乐园</span></div>
+        <div class="match"><span class="t">2023</span><span class="vs">VS</span><span class="t">情有独钟</span></div>
+        <div class="match"><span class="t">一吻天荒</span><span class="vs">VS</span><span class="t">四海欢腾</span></div>
+        <div class="match"><span class="t">再续前缘</span><span class="vs">VS</span><span class="t">时空之隙</span></div>
+        <div class="match"><span class="t">2020</span><span class="vs">VS</span><span class="t">大美神州</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="勇武">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周五</span><span class="md">11月13日</span></div>
+    <div class="dh-right"><span class="badge g-勇武">勇武组第十轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time">14:00-16:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">盛世长歌</span><span class="vs">VS</span><span class="t">一见钟情</span></div>
+        <div class="match"><span class="t">双面伊人</span><span class="vs">VS</span><span class="t">盛世丰年</span></div>
+        <div class="match"><span class="t">天下无双</span><span class="vs">VS</span><span class="t">贝壳女孩</span></div>
+      </div>
+    </div>
+    <div class="slot">
+      <div class="time">16:00-18:00</div>
+      <div class="matches">
+        <div class="match"><span class="t">瑶池圣地</span><span class="vs">VS</span><span class="t">情有独钟</span></div>
+        <div class="match"><span class="t">虎虎生威</span><span class="vs">VS</span><span class="t">#18</span></div>
+        <div class="match"><span class="t">倾国倾城</span><span class="vs">VS</span><span class="t">2019</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="day" data-group="勇武">
+  <header class="dh">
+    <div class="dh-left"><span class="wd">周日</span><span class="md">11月15日</span></div>
+    <div class="dh-right"><span class="badge g-勇武">勇武组第十一轮</span></div>
+  </header>
+  <div class="slots">
+    <div class="slot">
+      <div class="time tongkai">14:00 同开</div>
+      <div class="matches">
+        <div class="match"><span class="t">倾国倾城</span><span class="vs">VS</span><span class="t">双面伊人</span></div>
+        <div class="match"><span class="t">瑶池圣地</span><span class="vs">VS</span><span class="t">天下无双</span></div>
+        <div class="match"><span class="t">虎虎生威</span><span class="vs">VS</span><span class="t">盛世长歌</span></div>
+        <div class="match"><span class="t">2019</span><span class="vs">VS</span><span class="t">盛世丰年</span></div>
+        <div class="match"><span class="t">情有独钟</span><span class="vs">VS</span><span class="t">贝壳女孩</span></div>
+        <div class="match"><span class="t">#18</span><span class="vs">VS</span><span class="t">一见钟情</span></div>
+      </div>
+    </div>
+  </div>
+</article>
+  </div>
+</section>
+  </div>
+  </section>
+
+  <section class="panel" id="panel-roster">
+  <div class="filters">
+    <button class="on" data-g="all">全部</button>
+    <button data-g="神威">神威组</button>
+    <button data-g="勇武">勇武组</button>
+    <button data-g="精锐">精锐组</button>
+  </div>
+  <div class="groups">
+<section class="group" data-group="神威">
+  <h2>神威组 <span class="gcount">12 支战队</span></h2>
+  <div class="teams">
+<article class="team" data-group="神威">
+  <header class="th">
+    <span class="tname">似水流年</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">演员</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">蝴蝶</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">秋天</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">江逐流 / 演员</span></div>
+  </div>
+</article>
+<article class="team" data-group="神威">
+  <header class="th">
+    <span class="tname">双生梦</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">飞飞</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">小姚</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">小牛</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">天空 / 阿栋</span></div>
+  </div>
+</article>
+<article class="team" data-group="神威">
+  <header class="th">
+    <span class="tname">东海湾</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">小峰</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">灯泡</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">爆爆灵</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">小泡 / 杨杨 / 阿文</span></div>
+  </div>
+</article>
+<article class="team" data-group="神威">
+  <header class="th">
+    <span class="tname">彩云追月</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">草莓叔叔</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">青木</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">良少</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">草莓叔叔 / 肉肉 / 沐浴露</span></div>
+  </div>
+</article>
+<article class="team" data-group="神威">
+  <header class="th">
+    <span class="tname">2018</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">不不一</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">若寒</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">熊大</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">新来 / Lu zhi</span></div>
+  </div>
+</article>
+<article class="team" data-group="神威">
+  <header class="th">
+    <span class="tname">紫禁之巅</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">iv</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">无为</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">iv</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">icy / 南蛮 / 胖墩</span></div>
+  </div>
+</article>
+<article class="team" data-group="神威">
+  <header class="th">
+    <span class="tname">山清水秀</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">晶晶</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">破晓</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">酒桶</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">小明 / 泡泡 / 不羁</span></div>
+  </div>
+</article>
+<article class="team" data-group="神威">
+  <header class="th">
+    <span class="tname">桂花醉</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">tbby</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">永日</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">永美</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">永瓜 / 永言 / 永季</span></div>
+  </div>
+</article>
+<article class="team" data-group="神威">
+  <header class="th">
+    <span class="tname">天下无双</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">阿星</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">三刀</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">小侠</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">阿星 / 汽车 / 雪牛</span></div>
+  </div>
+</article>
+<article class="team" data-group="神威">
+  <header class="th">
+    <span class="tname">时空之隙</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">魅二爷</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">木子</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">dz坤</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">123 / 天狼 / 呕吐</span></div>
+  </div>
+</article>
+<article class="team" data-group="神威">
+  <header class="th">
+    <span class="tname">紫气东来</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">晓心心</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">待续</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">小飞</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">小腹黑 / 阿穹 / 猴子</span></div>
+  </div>
+</article>
+<article class="team" data-group="神威">
+  <header class="th">
+    <span class="tname">永结同心</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">南子</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">南子</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">弟弟</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">kk / 元若 / 小y</span></div>
+  </div>
+</article>
+  </div>
+</section>
+<section class="group" data-group="勇武">
+  <h2>勇武组 <span class="gcount">12 支战队</span></h2>
+  <div class="teams">
+<article class="team" data-group="勇武">
+  <header class="th">
+    <span class="tname">天下无双</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">火哥</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">毒男</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">火哥</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">羊肉 / 小T / 啊乳</span></div>
+  </div>
+</article>
+<article class="team" data-group="勇武">
+  <header class="th">
+    <span class="tname">倾国倾城</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">无悔</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">无悔</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">字母</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">黑白 / CCY / 学费</span></div>
+  </div>
+</article>
+<article class="team" data-group="勇武">
+  <header class="th">
+    <span class="tname">#18</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">啊炸</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">曹孟德</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">梦遗大师</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">牧尘 / 土匪 / 机械猫</span></div>
+  </div>
+</article>
+<article class="team" data-group="勇武">
+  <header class="th">
+    <span class="tname">瑶池圣地</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">来福</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">记忆</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">scc</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">卡比兽 / 熊猫 / 阿b</span></div>
+  </div>
+</article>
+<article class="team" data-group="勇武">
+  <header class="th">
+    <span class="tname">一见钟情</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">王子</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">阿迟</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">初雪</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">金毛 / 小毛</span></div>
+  </div>
+</article>
+<article class="team" data-group="勇武">
+  <header class="th">
+    <span class="tname">贝克女孩</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">Pn</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">春菊</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">混服大炮</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">Pn / xy / 野野</span></div>
+  </div>
+</article>
+<article class="team" data-group="勇武">
+  <header class="th">
+    <span class="tname">盛世长歌</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">400</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">400</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">R8</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">猪 / 月牙 / 千里</span></div>
+  </div>
+</article>
+<article class="team" data-group="勇武">
+  <header class="th">
+    <span class="tname">盛世丰年</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">温暖</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">dd</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">胖虎</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">温暖 / 豆角 / 太阳</span></div>
+  </div>
+</article>
+<article class="team" data-group="勇武">
+  <header class="th">
+    <span class="tname">2019</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">啊文</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">邪帝</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">花花</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">啦啦啦 / 馄饨 / 啊文</span></div>
+  </div>
+</article>
+<article class="team" data-group="勇武">
+  <header class="th">
+    <span class="tname">情有独钟</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">阿勇</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">77</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">阿勇</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">远方 / 小北 / 神秘人</span></div>
+  </div>
+</article>
+<article class="team" data-group="勇武">
+  <header class="th">
+    <span class="tname">双面伊人</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">瓜皮</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">离一</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">瓜皮</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">老狗 / 桃子 / 毛强</span></div>
+  </div>
+</article>
+<article class="team" data-group="勇武">
+  <header class="th">
+    <span class="tname">虎虎生威</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">幕心</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">浪浪</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">阿光</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">肉别 / 秋秋 / 阿佳</span></div>
+  </div>
+</article>
+  </div>
+</section>
+<section class="group" data-group="精锐">
+  <h2>精锐组 <span class="gcount">12 支战队</span></h2>
+  <div class="teams">
+<article class="team" data-group="精锐">
+  <header class="th">
+    <span class="tname">再续前缘</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">阿毅</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">米勒</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">莫忘</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">晚餐 / 剑辉 / 戚晨</span></div>
+  </div>
+</article>
+<article class="team" data-group="精锐">
+  <header class="th">
+    <span class="tname">纵横天下</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">阿仔</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">黎明</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">昊天</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">呆呆 / 阿文 / 小袁</span></div>
+  </div>
+</article>
+<article class="team" data-group="精锐">
+  <header class="th">
+    <span class="tname">时空之隙</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">曦帅</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">哪吒</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">浅末</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">薯片 / 天然 / 无良</span></div>
+  </div>
+</article>
+<article class="team" data-group="精锐">
+  <header class="th">
+    <span class="tname">生日快乐</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">天一</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">天一</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">长安某</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">佳佳 / 蛋白 / 绿刀</span></div>
+  </div>
+</article>
+<article class="team" data-group="精锐">
+  <header class="th">
+    <span class="tname">四海欢腾</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">11</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">阿欢</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">乌拉拉</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">辰辰 / timo / 11</span></div>
+  </div>
+</article>
+<article class="team" data-group="精锐">
+  <header class="th">
+    <span class="tname">2023</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">阿D</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">沛沛</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">龙鑫</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">四哥哥 / 小落 / 光子</span></div>
+  </div>
+</article>
+<article class="team" data-group="精锐">
+  <header class="th">
+    <span class="tname">三界乐园</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">二狗</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">叶十七</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">二狗</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">三井 / 椰子头</span></div>
+  </div>
+</article>
+<article class="team" data-group="精锐">
+  <header class="th">
+    <span class="tname">大美神州</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">逆逆</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">亭风</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">丁文超</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">卡尔 / 开心 / 东东</span></div>
+  </div>
+</article>
+<article class="team" data-group="精锐">
+  <header class="th">
+    <span class="tname">情有独钟</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">龙丘</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">吉吉</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">阿权</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">本子 / 小弟 / 叶子</span></div>
+  </div>
+</article>
+<article class="team" data-group="精锐">
+  <header class="th">
+    <span class="tname">一吻天荒</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">苏苏</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">颜值文</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">苏苏</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">啊江 / 村长 / 老余</span></div>
+  </div>
+</article>
+<article class="team" data-group="精锐">
+  <header class="th">
+    <span class="tname">2020</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">句句不轻易.</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">可乐</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">阿阳</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">小5 / 878 / 熬夜</span></div>
+  </div>
+</article>
+<article class="team" data-group="精锐">
+  <header class="th">
+    <span class="tname">2022</span>
+    <span class="tmgr"><span class="lb">战队经理</span><span class="vl">老宁</span></span>
+  </header>
+  <div class="roles">
+    <div class="pair">
+        <div class="role main"><span class="lb">主指挥</span><span class="vl">问题</span></div>
+
+        <div class="role "><span class="lb">副指挥</span><span class="vl">非凡</span></div>
+
+    </div>
+    <div class="role picks"><span class="lb">选手</span><span class="vl">阿伟 / 老莫 / 不暗</span></div>
+  </div>
+</article>
+  </div>
+</section>
+  </div>
+  </section>
+</div>
+<script>
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  var panels = Array.prototype.slice.call(document.querySelectorAll('.panel'));
+  function activate(name, push) {
+    tabs.forEach(function(t){ t.classList.toggle('on', t.dataset.tab === name); });
+    panels.forEach(function(p){ p.classList.toggle('on', p.id === 'panel-' + name); });
+    if (push !== false && location.hash !== '#' + name) {
+      try { history.replaceState(null, '', '#' + name); } catch (e) {}
+    }
+  }
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){ activate(t.dataset.tab); window.scrollTo(0, 0); });
+  });
+
+  document.querySelectorAll('.panel').forEach(function(p){
+    var btns = Array.prototype.slice.call(p.querySelectorAll('.filters button'));
+    btns.forEach(function(b){
+      b.addEventListener('click', function(){
+        btns.forEach(function(x){ x.classList.remove('on'); });
+        b.classList.add('on');
+        var g = b.dataset.g;
+        if (p.id === 'panel-schedule') {
+          p.querySelector('.weeks').classList.toggle('bygroup', g !== 'all');
+          p.querySelectorAll('.week').forEach(function(w){
+            var shown = 0;
+            w.querySelectorAll('.day').forEach(function(d){
+              var ok = (g === 'all') || (d.dataset.group === g);
+              d.style.display = ok ? '' : 'none';
+              if (ok) shown++;
+            });
+            w.style.display = shown ? '' : 'none';
+          });
+        } else {
+          p.querySelectorAll('.group').forEach(function(sec){
+            sec.style.display = (g === 'all' || sec.dataset.group === g) ? '' : 'none';
+          });
+        }
+      });
+    });
+  });
+
+  var init = location.hash.replace('#', '');
+  activate(init === 'roster' ? 'roster' : 'schedule', false);
+</script>
+</body>
+</html>
